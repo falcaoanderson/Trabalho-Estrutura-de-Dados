@@ -5,8 +5,8 @@
 #include <random>
 
 std::vector<int> GenerateList(int n) {
-    std::random_device rd;  
-    std::mt19937 gen(rd()); 
+    // std::random_device rd;  
+    std::mt19937 gen(13); 
     std::uniform_int_distribution<> unifDis(1, 100); 
 
     std::vector<int> temp;

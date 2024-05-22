@@ -1,40 +1,57 @@
 #include <iostream>
+#include <string>
+#include <vector>
 
 #include "Linked_list.h"
+
 #include "SortBubble.h"
 #include "SortSelection.h"
+#include "SortInsertion.h"
+#include "SortShell.h"
+
 #include "utils.h"
 #include "Measure.h"
+#include "GenerateExample.h"
 
 int main(){
     int numTests = 10, n = 1e4;
     List list;
 
-    int deltaTime1 = 0;
-    int deltaTime2 = 0;
-    int deltaTime3 = 0;
-    int deltaTime4 = 0;
+    std::vector<int> deltaTime(8);
+    std::vector<std::string> label = {"SelectionSort", "OptimizedSelectionSort", 
+    "BubbleSort", "OptimizedBubbleSort", "InsertionSort", "OptimizedInsertionSort", "ShellSort", "OptimizedShellSort"};
 
     for(int i=1; i<=numTests; i++){
         std::vector<int> v = GenerateList(n);
 
         list.resetList(v);
-        deltaTime1 += measureAndSort(SelectionSort, list);
+        deltaTime[0] += measureAndSort(SelectionSort, list);
         
         list.resetList(v);
-        deltaTime2 += measureAndSort(OptimizedSelectionSort, list);
+        deltaTime[1] += measureAndSort(OptimizedSelectionSort, list);
         
         list.resetList(v);
-        deltaTime3 += measureAndSort(BubbleSort, list);
+        deltaTime[2] += measureAndSort(BubbleSort, list);
         
         list.resetList(v);
-        deltaTime4 += measureAndSort(OptimizedBubbleSort, list);
+        deltaTime[3] += measureAndSort(OptimizedBubbleSort, list);
+
+        list.resetList(v);
+        deltaTime[4] += measureAndSort(InsertionSort, list);
+        
+        list.resetList(v);
+        deltaTime[5] += measureAndSort(OptimizedInsertionSort, list);
+
+        list.resetList(v);
+        deltaTime[6] += measureAndSort(ShellSort, list);
+        
+        list.resetList(v);
+        deltaTime[7] += measureAndSort(OptimizedShellSort, list);
     }
 
-    cout << "SelectionSort: "          << deltaTime1 << endl;
-    cout << "OptimizedSelectionSort: " << deltaTime2 << endl;
-    cout << "BubbleSort: "             << deltaTime3 << endl;
-    cout << "OptimizedBubbleSort: "    << deltaTime4 << endl;
+    for(int i=0; i<8; i++){
+        cout << label[i] << ": " << deltaTime[i] << " ms." << endl;
+    }
 
     return 0;
 }

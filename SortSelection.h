@@ -2,16 +2,15 @@
 #define SORT_SELECTION
 
 #include "Linked_list.h"
-#include "GenerateExample.h"
 #include "utils.h"
 
 void SelectionSort(List &list){
     Node* currentNode = list.getPtrFront();
 
-    while (currentNode) {
+    while (currentNode != nullptr) {
         Node* j = currentNode->ptrNext;
 
-        while (j) {
+        while (j != nullptr) {
             if (j->iVal < currentNode->iVal) {
                 swap(currentNode->iVal, j->iVal);
             }
@@ -25,11 +24,11 @@ void SelectionSort(List &list){
 void OptimizedSelectionSort(List &list) {
     Node* currentNode = list.getPtrFront();
 
-    while (currentNode) {
+    while (currentNode != nullptr) {
         Node* minNode = currentNode;
         Node* j = currentNode->ptrNext;
 
-        while (j) {
+        while (j != nullptr) {
             if (j->iVal < minNode->iVal) {
                 minNode = j;
             }
