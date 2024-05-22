@@ -195,26 +195,39 @@ struct List {
 };
 
 
-void measureAndSort(void (*sortFunction)(List&), const string& sortName, List& list, const std::vector<int>& v) {
+// int measureAndSort(void (*sortFunction)(List&), List& list){//, const string& sortName, List& list, const std::vector<int>& v) {
 
+//     high_resolution_clock::time_point start = high_resolution_clock::now();
+
+//     sortFunction(list);
+
+//     high_resolution_clock::time_point stop = high_resolution_clock::now();
+
+//     int duration = duration_cast<milliseconds>(stop - start).count();
+
+//     // cout << sortName << " time: " << duration << " milliseconds" << endl;
+
+//     // list.displayList();
+
+//     // list.clear();
+
+//     // for (int x : v) {
+//     //     list.insertBack(x);
+//     // }
+
+//     return duration;
+// }
+
+int measureAndSort(void (*sortFunction)(List&), List& list){
     high_resolution_clock::time_point start = high_resolution_clock::now();
 
     sortFunction(list);
 
     high_resolution_clock::time_point stop = high_resolution_clock::now();
 
-    microseconds duration = duration_cast<microseconds>(stop - start);
-
-    cout << sortName << " tiempo: " << duration.count() << " nanosegundos" << endl;
-
-    // list.displayList();
-
-    list.clear();
-
-    for (int x : v) {
-        list.insertBack(x);
-    }
-
+    int duration = duration_cast<milliseconds>(stop - start).count();
+    
+    return duration;
 }
 
 void prepareList(List& list, const std::vector<int>& v) {
@@ -224,7 +237,7 @@ void prepareList(List& list, const std::vector<int>& v) {
 
     }
 
-    cout << "Lista original:" << endl;
+    // cout << "Lista original:" << endl;
 
     // list.displayList();
 }

@@ -6,34 +6,34 @@
 
 
 int main(){
-    int numTests = 1;
+    int numTests = 100, n = 1e4;
+    List list;
 
-    while (numTests)
-    {
-        List list;
-        int n = 1e4;
+    int deltaTime1 = 0;
+    int deltaTime2 = 0;
+    int deltaTime3 = 0;
+    int deltaTime4 = 0;
 
-        std::vector < int > v = GenerateList(n);
+    for(int i=1; i<=numTests; i++){
+        std::vector<int> v = GenerateList(n);
+
+        resetList(list, v);
+        deltaTime1 += measureAndSort(SelectionSort, list);
         
-        prepareList(list, v);
+        resetList(list, v);
+        deltaTime2 += measureAndSort(OptimizedSelectionSort, list);
         
-        measureAndSort(SelectionSort, "SelectionSort", list, v);
-        cout << "-----------------------" << endl << endl;
-
         resetList(list, v);
-        measureAndSort(OptimizedSelectionSort, "OptimizedSelectionSort", list, v);
-        cout << "-----------------------" << endl << endl;
-
+        deltaTime3 += measureAndSort(BubbleSort, list);
+        
         resetList(list, v);
-        measureAndSort(BubbleSort, "BubbleSort", list, v);
-        cout << "-----------------------" << endl << endl;
-
-        resetList(list, v);
-        measureAndSort(OptimizedBubbleSort, "OptimizedBubbleSort", list, v);
-        cout << "-----------------------" << endl << endl;
-
-        numTests--;
+        deltaTime4 += measureAndSort(OptimizedBubbleSort, list);
     }
+
+    cout << "SelectionSort: "          << deltaTime1 << endl;
+    cout << "OptimizedSelectionSort: " << deltaTime2 << endl;
+    cout << "BubbleSort: "             << deltaTime3 << endl;
+    cout << "OptimizedBubbleSort: "    << deltaTime4 << endl;
 
     return 0;
 }
