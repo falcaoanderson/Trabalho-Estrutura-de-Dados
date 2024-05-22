@@ -1,20 +1,32 @@
+#ifndef LINKED_LIST_H
+#define LINKED_LIST_H
 #include <iostream>
 #include <vector>
+#include <chrono>
 
 using std::endl;
 using std::cout;
 using std::cin;
 using std::string;
+using namespace std::chrono;
+
 
 struct Node {
+
     int iVal;
+
     Node* ptrNext;
+
     Node* ptrPrev;
 
     Node(int iVal, Node* ptrNext=nullptr, Node* ptrPrev=nullptr){
+
         this->iVal     = iVal;
+
         this->ptrNext  = ptrNext;
+
         this->ptrPrev  = ptrPrev;
+
     }
 };
 
@@ -32,23 +44,22 @@ struct List {
         clear();
     }
 
-    void clear(){
+    void clear() {
         if(empty()) return;
 
         Node* crrNode = ptrFront;
 
         while(crrNode != nullptr){
             Node* aux = crrNode->ptrNext;
-
             delete crrNode;
-
             crrNode = aux;
         }
 
+        ptrFront = nullptr;  
         ptrBack = nullptr;
-
         iSize = 0;
     }
+
 
     int size(){
         return iSize;
@@ -69,7 +80,7 @@ struct List {
         }
 
         ptrFront = newNode;
-        
+
         iSize++;
     }
 
@@ -108,9 +119,9 @@ struct List {
         Node* crrNode = SearchNodeByValue(iVal);
 
         if (crrNode!=nullptr) {
-            
+
             Node* newNode = new Node(newValue);
-            
+
             newNode->ptrNext = crrNode->ptrNext;
             newNode->ptrPrev = crrNode;
 
@@ -129,7 +140,7 @@ struct List {
 
         if (crrNode!=nullptr) {
             Node* newNode = new Node(newValue);
-            
+
             newNode->ptrNext = crrNode;
             newNode->ptrPrev = crrNode->ptrPrev;
 
@@ -183,103 +194,47 @@ struct List {
     }
 };
 
-void swap(int &a, int &b){
-    int c = a;
-    a = b;
-    b = c;
 
-}
+void measureAndSort(void (*sortFunction)(List&), const string& sortName, List& list, const std::vector<int>& v) {
 
-void SelectionSort(List &list){
-    // List aux;
-    Node* currentNode = list.getPtrFront();
+    high_resolution_clock::time_point start = high_resolution_clock::now();
 
-    while (currentNode) {
-        Node* minNode = currentNode;
-        Node* j = currentNode->ptrNext;
+    sortFunction(list);
 
-        while (j) {
-            if (j->iVal < minNode->iVal) {
-                minNode = j;
-            }
-            j = j->ptrNext;
-        }
-        
-        swap(currentNode->iVal, minNode->iVal);
+    high_resolution_clock::time_point stop = high_resolution_clock::now();
 
-        currentNode = currentNode->ptrNext;
-    }
-}
+    nanoseconds duration = duration_cast<nanoseconds>(stop - start);
 
+    cout << sortName << " tiempo: " << duration.count() << " nanosegundos" << endl;
 
-void BubbleSort(List &list){
-    bool sorted = 0;
+    list.displayList();
 
-    while(!sorted){
-        sorted = 1;
+    list.clear();
 
-        Node* crrNode = list.getPtrFront();
-        while(crrNode!=nullptr && crrNode->ptrNext!=nullptr){
-            if((crrNode->iVal)>(crrNode->ptrNext->iVal)){
-                int aux = crrNode->iVal;
-                
-                crrNode->iVal = crrNode->ptrNext->iVal;
-                
-                crrNode->ptrNext->iVal = aux;    
-
-                sorted = 0;
-            }
-
-            crrNode = crrNode->ptrNext;
-        }
-    }
-}
-
-
-int main() {
-    List list;
-
-    std::vector<int> v({20, 10, 15, 25, 30});
-
-    for(int x: v){
-        cout << x << endl;
+    for (int x : v) {
         list.insertBack(x);
     }
 
-    list.displayList();
-    SelectionSort(list);
-    list.displayList();
+}
 
-    list.deleteByValue(30);
-    list.displayList();
-    list.deleteByValue(20);
-    list.displayList();
-    list.deleteByValue(15);
-    list.displayList();
-    list.deleteByValue(10);
-    list.displayList();
-    list.deleteByValue(25);
-    list.displayList();
+void prepareList(List& list, const std::vector<int>& v) {
+    for (int x : v) {
 
-
-    for(int x: v){
-        cout << x << endl;
         list.insertBack(x);
+
     }
 
-    list.displayList();
-    BubbleSort(list);
-    list.displayList();
+    cout << "Lista original:" << endl;
 
-    list.insertAfter(30, 50);
     list.displayList();
-    list.insertBefore(10, 5);
-    list.displayList();
-    list.insertBefore(15, 30);
-    list.displayList();
-
-    SelectionSort(list);
-    list.displayList();
-
-    return 0;
 }
+
+void resetList(List& list, const std::vector<int>& v) {
+
+    list.clear();
+
+    prepareList(list, v);
+
+}
+
+#endif // GENERATE_EXAMPLE_H
