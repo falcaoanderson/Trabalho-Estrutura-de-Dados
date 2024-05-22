@@ -4,18 +4,16 @@
 #include <vector>
 #include <random>
 
-#include "Linked_list.h"
-
 std::vector<int> GenerateList(int n) {
-    std::vector<int> list;
     std::random_device rd;  
     std::mt19937 gen(rd()); 
-    std::uniform_int_distribution<> dis(1, 100); 
+    std::uniform_int_distribution<> unifDis(1, 100); 
 
+    std::vector<int> temp;
     for (int i = 0; i < n; ++i) {
-        list.push_back(dis(gen));
+        temp.push_back(unifDis(gen));
     }
-    return list;
+    return temp;
 }
 
 #endif // GENERATE_EXAMPLE_H

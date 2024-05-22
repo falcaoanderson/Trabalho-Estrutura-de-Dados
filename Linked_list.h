@@ -7,24 +7,16 @@
 using std::endl;
 using std::cout;
 using std::cin;
-using std::string;
 
 struct Node {
-
     int iVal;
-
     Node* ptrNext;
-
     Node* ptrPrev;
 
     Node(int iVal, Node* ptrNext=nullptr, Node* ptrPrev=nullptr){
-
         this->iVal     = iVal;
-
         this->ptrNext  = ptrNext;
-
         this->ptrPrev  = ptrPrev;
-
     }
 };
 
@@ -57,7 +49,6 @@ struct List {
         ptrBack = nullptr;
         iSize = 0;
     }
-
 
     int size(){
         return iSize;
@@ -192,7 +183,6 @@ struct List {
     }
 
     void resetList(const std::vector<int>& v) {
-
         clear();
 
         for(int x: v){

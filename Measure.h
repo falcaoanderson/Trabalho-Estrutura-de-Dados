@@ -1,7 +1,6 @@
 #ifndef MEASURE_
 #define MEASURE_
 
-#include <iostream>
 #include <chrono>
 
 #include "Linked_list.h"
