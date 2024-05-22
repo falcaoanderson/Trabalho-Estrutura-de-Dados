@@ -10,7 +10,6 @@ using std::cin;
 using std::string;
 using namespace std::chrono;
 
-
 struct Node {
 
     int iVal;
@@ -194,9 +193,7 @@ struct List {
     }
 };
 
-
-// int measureAndSort(void (*sortFunction)(List&), List& list){//, const string& sortName, List& list, const std::vector<int>& v) {
-
+// int measureAndSort(void (*sortFunction)(List&), List& list){
 //     high_resolution_clock::time_point start = high_resolution_clock::now();
 
 //     sortFunction(list);
@@ -205,49 +202,27 @@ struct List {
 
 //     int duration = duration_cast<milliseconds>(stop - start).count();
 
-//     // cout << sortName << " time: " << duration << " milliseconds" << endl;
-
-//     // list.displayList();
-
-//     // list.clear();
-
-//     // for (int x : v) {
-//     //     list.insertBack(x);
-//     // }
-
 //     return duration;
 // }
 
-int measureAndSort(void (*sortFunction)(List&), List& list){
-    high_resolution_clock::time_point start = high_resolution_clock::now();
+// void prepareList(List& list, const std::vector<int>& v) {
+//     for (int x : v) {
 
-    sortFunction(list);
+//         list.insertBack(x);
 
-    high_resolution_clock::time_point stop = high_resolution_clock::now();
+//     }
 
-    int duration = duration_cast<milliseconds>(stop - start).count();
-    
-    return duration;
-}
+//     // cout << "Lista original:" << endl;
 
-void prepareList(List& list, const std::vector<int>& v) {
-    for (int x : v) {
+//     // list.displayList();
+// }
 
-        list.insertBack(x);
+// void resetList(List& list, const std::vector<int>& v) {
 
-    }
+//     list.clear();
 
-    // cout << "Lista original:" << endl;
+//     prepareList(list, v);
 
-    // list.displayList();
-}
-
-void resetList(List& list, const std::vector<int>& v) {
-
-    list.clear();
-
-    prepareList(list, v);
-
-}
+// }
 
 #endif // GENERATE_EXAMPLE_H

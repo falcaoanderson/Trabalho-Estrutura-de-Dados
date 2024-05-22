@@ -3,7 +3,7 @@
 #include "SortBubble.h"
 #include "SortSelection.h"
 #include "utils.h"
-
+#include "Measure.h"
 
 int main(){
     int numTests = 100, n = 1e4;
