@@ -1,8 +1,10 @@
 #ifndef GENERATE_EXAMPLE_H
 #define GENERATE_EXAMPLE_H
-#include "Linked_list.h"
+
 #include <vector>
 #include <random>
+
+#include "Linked_list.h"
 
 std::vector<int> GenerateList(int n) {
     std::vector<int> list;

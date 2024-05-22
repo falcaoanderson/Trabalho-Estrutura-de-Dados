@@ -1,14 +1,13 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
+
 #include <iostream>
 #include <vector>
-#include <chrono>
 
 using std::endl;
 using std::cout;
 using std::cin;
 using std::string;
-using namespace std::chrono;
 
 struct Node {
 
@@ -191,38 +190,15 @@ struct List {
     Node* getPtrFront(){
         return ptrFront;
     }
+
+    void resetList(const std::vector<int>& v) {
+
+        clear();
+
+        for(int x: v){
+            insertBack(x);
+        }
+    }
 };
-
-// int measureAndSort(void (*sortFunction)(List&), List& list){
-//     high_resolution_clock::time_point start = high_resolution_clock::now();
-
-//     sortFunction(list);
-
-//     high_resolution_clock::time_point stop = high_resolution_clock::now();
-
-//     int duration = duration_cast<milliseconds>(stop - start).count();
-
-//     return duration;
-// }
-
-// void prepareList(List& list, const std::vector<int>& v) {
-//     for (int x : v) {
-
-//         list.insertBack(x);
-
-//     }
-
-//     // cout << "Lista original:" << endl;
-
-//     // list.displayList();
-// }
-
-// void resetList(List& list, const std::vector<int>& v) {
-
-//     list.clear();
-
-//     prepareList(list, v);
-
-// }
 
 #endif // GENERATE_EXAMPLE_H

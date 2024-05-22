@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "Linked_list.h"
 #include "SortBubble.h"
 #include "SortSelection.h"
@@ -6,7 +7,7 @@
 #include "Measure.h"
 
 int main(){
-    int numTests = 100, n = 1e4;
+    int numTests = 10, n = 1e4;
     List list;
 
     int deltaTime1 = 0;
@@ -17,16 +18,16 @@ int main(){
     for(int i=1; i<=numTests; i++){
         std::vector<int> v = GenerateList(n);
 
-        resetList(list, v);
+        list.resetList(v);
         deltaTime1 += measureAndSort(SelectionSort, list);
         
-        resetList(list, v);
+        list.resetList(v);
         deltaTime2 += measureAndSort(OptimizedSelectionSort, list);
         
-        resetList(list, v);
+        list.resetList(v);
         deltaTime3 += measureAndSort(BubbleSort, list);
         
-        resetList(list, v);
+        list.resetList(v);
         deltaTime4 += measureAndSort(OptimizedBubbleSort, list);
     }
 

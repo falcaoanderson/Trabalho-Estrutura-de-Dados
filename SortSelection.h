@@ -41,4 +41,5 @@ void OptimizedSelectionSort(List &list) {
         currentNode = currentNode->ptrNext;
     }
 }
+
 #endif

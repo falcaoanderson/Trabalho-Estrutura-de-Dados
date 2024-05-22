@@ -1,7 +1,6 @@
 #ifndef UTILS
 #define UTILS
 
-
 void swap(int &a, int &b){
 
     int c = a;
@@ -11,6 +10,5 @@ void swap(int &a, int &b){
     b = c;
 
 }
-
 
 #endif
