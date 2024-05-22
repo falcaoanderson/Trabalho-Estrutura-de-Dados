@@ -203,11 +203,11 @@ void measureAndSort(void (*sortFunction)(List&), const string& sortName, List& l
 
     high_resolution_clock::time_point stop = high_resolution_clock::now();
 
-    nanoseconds duration = duration_cast<nanoseconds>(stop - start);
+    microseconds duration = duration_cast<microseconds>(stop - start);
 
     cout << sortName << " tiempo: " << duration.count() << " nanosegundos" << endl;
 
-    list.displayList();
+    // list.displayList();
 
     list.clear();
 
@@ -226,7 +226,7 @@ void prepareList(List& list, const std::vector<int>& v) {
 
     cout << "Lista original:" << endl;
 
-    list.displayList();
+    // list.displayList();
 }
 
 void resetList(List& list, const std::vector<int>& v) {

@@ -11,7 +11,7 @@ int main(){
     while (numTests)
     {
         List list;
-        int n = 10;
+        int n = 1e4;
 
         std::vector < int > v = GenerateList(n);
         
