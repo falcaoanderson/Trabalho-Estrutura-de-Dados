@@ -9,12 +9,15 @@
 #include "SortInsertion.h"
 #include "SortShell.h"
 
-#include "utils.h"
 #include "Measure.h"
 #include "GenerateExample.h"
 
+using std::cout;
+using std::cin;
+using std::endl;
+
 int main(){
-    int numTests = 10, n = 1e4;
+    int numTests = 1, n = 1e4;
     List list;
 
     std::vector<int> deltaTime(8);
@@ -52,6 +55,8 @@ int main(){
     for(int i=0; i<8; i++){
         cout << label[i] << ": " << deltaTime[i] << " ms." << endl;
     }
+
+    cout << "OK" << endl;
 
     return 0;
 }

@@ -1,23 +1,14 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
-#include <iostream>
 #include <vector>
-
-using std::endl;
-using std::cout;
-using std::cin;
 
 struct Node {
     int iVal;
     Node* ptrNext;
     Node* ptrPrev;
 
-    Node(int iVal, Node* ptrNext=nullptr, Node* ptrPrev=nullptr){
-        this->iVal     = iVal;
-        this->ptrNext  = ptrNext;
-        this->ptrPrev  = ptrPrev;
-    }
+    Node(int iVal, Node* ptrNext, Node* ptrPrev);
 };
 
 struct List {
@@ -25,170 +16,33 @@ struct List {
     Node* ptrFront;
     Node* ptrBack;
 
-    List(int iSize=0, Node* ptrFront = nullptr, Node* ptrBack = nullptr) {
-        this->iSize    = iSize;
-        this->ptrFront = ptrFront;
-        this->ptrBack  = ptrBack;
-    }
-    ~List(){
-        clear();
-    }
+    List();
 
-    void clear() {
-        if(empty()) return;
+    ~List();
 
-        Node* crrNode = ptrFront;
+    void clear();
 
-        while(crrNode != nullptr){
-            Node* aux = crrNode->ptrNext;
-            delete crrNode;
-            crrNode = aux;
-        }
+    int size();
 
-        ptrFront = nullptr;  
-        ptrBack = nullptr;
-        iSize = 0;
-    }
+    bool empty();
 
-    int size(){
-        return iSize;
-    }
-    bool empty(){
-        return (iSize==0);
-    }
+    void insertFront(int iVal);
 
-    void insertFront(int iVal){
-        Node* newNode = new Node(iVal);
+    void insertBack(int iVal);
 
-        if(ptrFront==nullptr){
-            ptrBack  = newNode;
-        }
-        else{
-            newNode ->ptrNext = ptrFront;
-            ptrFront->ptrPrev = newNode;
-        }
+    Node* SearchNodeByValue(int iVal);
 
-        ptrFront = newNode;
+    void insertAfter(int iVal, int newValue);
 
-        iSize++;
-    }
+    void insertBefore(int iVal, int newValue);
 
-    void insertBack(int iVal) {
-        Node* newNode = new Node(iVal);
+    void deleteByValue(int iVal);
 
-        if(ptrFront==nullptr){
-            ptrFront = newNode;
-        }
-        else{
-            newNode->ptrPrev = ptrBack;
-            ptrBack->ptrNext = newNode;
-        }
+    void displayList();
 
-        ptrBack = newNode;
+    Node* getPtrFront();
 
-        iSize++;
-    }
-
-    Node* SearchNodeByValue(int iVal) {
-        Node* crrNode = ptrFront;
-
-        while (crrNode!=nullptr && crrNode->iVal != iVal) {
-            crrNode = crrNode->ptrNext;
-        }
-
-        if(crrNode!=nullptr && crrNode->iVal == iVal){
-            return crrNode;
-        }
-        else{
-            return nullptr;
-        }
-    }
-
-    void insertAfter(int iVal, int newValue) {
-        Node* crrNode = SearchNodeByValue(iVal);
-
-        if (crrNode!=nullptr) {
-
-            Node* newNode = new Node(newValue);
-
-            newNode->ptrNext = crrNode->ptrNext;
-            newNode->ptrPrev = crrNode;
-
-            if(crrNode->ptrNext){
-                crrNode->ptrNext->ptrPrev = newNode;
-            } 
-            else{
-                ptrBack = newNode;
-            }
-            crrNode->ptrNext = newNode;
-        }
-    }
-
-    void insertBefore(int iVal, int newValue) {
-        Node* crrNode=SearchNodeByValue(iVal);
-
-        if (crrNode!=nullptr) {
-            Node* newNode = new Node(newValue);
-
-            newNode->ptrNext = crrNode;
-            newNode->ptrPrev = crrNode->ptrPrev;
-
-            if(crrNode->ptrPrev != nullptr){
-                crrNode->ptrPrev->ptrNext = newNode;
-            } 
-            else{
-                ptrFront = newNode;
-            }
-
-            crrNode->ptrPrev = newNode;
-        }
-    }
-
-    void deleteByValue(int iVal) {
-        Node* crrNode = SearchNodeByValue(iVal);
-
-        if (crrNode!=nullptr) {
-            if (crrNode->ptrPrev){
-                crrNode->ptrPrev->ptrNext = crrNode->ptrNext;
-            } 
-            else{
-                ptrFront = crrNode->ptrNext;
-            }
-
-            if(crrNode->ptrNext){
-                crrNode->ptrNext->ptrPrev = crrNode->ptrPrev;
-            } 
-            else{
-                ptrBack = crrNode->ptrPrev;
-            }
-
-            delete crrNode;
-        }
-    }
-
-    void displayList() {
-        Node* crrNode = ptrFront;
-
-        cout << "List: ";
-        while(crrNode!=nullptr) {
-            cout << crrNode->iVal << " ";
-
-            crrNode = crrNode->ptrNext;
-        }
-        cout << endl;
-    }
-
-    Node* getPtrFront(){
-        return ptrFront;
-    }
-
-    void resetList(const std::vector<int>& v) {
-        clear();
-
-        for(int x: v){
-            insertBack(x);
-        }
-    }
+    void resetList(const std::vector<int>& v);
 };
 
-#endif // GENERATE_EXAMPLE_H
+#endif
