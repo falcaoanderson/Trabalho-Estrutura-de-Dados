@@ -4,13 +4,13 @@ using std::endl;
 using std::cout;
 using std::cin;
 
-struct Node{
-    int iPayload;
-    Node *ptrLeft, *ptrRight, *ptrParent;
+template<typename T> struct Node{
+    T iPayload;
+    Node<T> *ptrLeft, *ptrRight, *ptrParent;
 
     Node(){}
-    Node(int iPayload) : iPayload(iPayload), ptrLeft(nullptr), ptrRight(nullptr), ptrParent(nullptr) {}
-    Node(int iPayload, Node* ptrParent) : iPayload(iPayload), ptrLeft(nullptr), ptrRight(nullptr), ptrParent(ptrParent) {}
+    Node(T iPayload) : iPayload(iPayload), ptrLeft(nullptr), ptrRight(nullptr), ptrParent(nullptr) {}
+    Node(T iPayload, Node<T>* ptrParent) : iPayload(iPayload), ptrLeft(nullptr), ptrRight(nullptr), ptrParent(ptrParent) {}
 };
 
 template<typename T> T max(T a, T b){
@@ -21,13 +21,14 @@ template<typename T> T min(T a, T b){
     return a<b?a:b;
 }
 
+template<typename T> 
 class BinarySearchTree{
 
 private:
-    Node* ptrRoot;
+    Node<T>* ptrRoot;
     int size;
 
-    Node* searchParent(Node* u, int iValue){ // retorna o "parente" de iValue
+    Node<T>* searchParent(Node<T>* u, T iValue){ // retorna o "parente" de iValue
         if(u==nullptr){
             return nullptr;
         }
@@ -49,7 +50,7 @@ private:
         }
     }
 
-    void clear(Node* u){
+    void clear(Node<T>* u){
         if(u==nullptr){
             return;
         }
@@ -60,7 +61,7 @@ private:
         delete u;
     }
 
-    void traversePreOrder(Node* u){
+    void traversePreOrder(Node<T>* u){
         if(u==nullptr){
             return;
         }
@@ -70,7 +71,7 @@ private:
         traversePreOrder(u->ptrRight);
     }
 
-    void traverseInOrder(Node* u){
+    void traverseInOrder(Node<T>* u){
         if(u==nullptr){
             return;
         }
@@ -80,7 +81,7 @@ private:
         traverseInOrder(u->ptrRight);
     }
 
-    void traversePostOrder(Node* u){
+    void traversePostOrder(Node<T>* u){
         if(u==nullptr){
             return;
         }
@@ -90,7 +91,7 @@ private:
         cout << u->iPayload << " ";
     }
     
-    int height(Node* u){
+    int height(Node<T>* u){
         if(u==nullptr) return 0;
 
         return 1 + max(height(u->ptrLeft), height(u->ptrRight));
@@ -110,25 +111,25 @@ public:
         ptrRoot = nullptr;
     }
 
-    void insert(int iValue){
+    void insert(T iValue){
         if(ptrRoot==nullptr){
-            ptrRoot = new Node(iValue);
+            ptrRoot = new Node<T>(iValue);
         }
         else{
-            Node* parent = searchParent(ptrRoot, iValue);
+            Node<T>* parent = searchParent(ptrRoot, iValue);
             
             if( iValue < (parent->iPayload) ){
-                parent->ptrLeft = new Node(iValue, parent);
+                parent->ptrLeft = new Node<T>(iValue, parent);
             }
             else{
-                parent->ptrRight = new Node(iValue, parent);
+                parent->ptrRight = new Node<T>(iValue, parent);
             }
         }
 
         size++;
     }
 
-    Node* searchNode(int iValue){
+    Node<T>* searchNode(T iValue){
         if(ptrRoot==nullptr){
             return nullptr;
         }
@@ -137,7 +138,7 @@ public:
             return ptrRoot;
         }
 
-        Node* parent = searchParent(ptrRoot, iValue);
+        Node<T>* parent = searchParent(ptrRoot, iValue);
             
         if( (parent->ptrLeft->iPayload) == iValue ){
             return parent->ptrLeft;
@@ -168,7 +169,7 @@ public:
 
 int main(){
 
-    BinarySearchTree mytree;
+    BinarySearchTree<int> mytree;
 
     mytree.insert(10);
     mytree.insert(5);
