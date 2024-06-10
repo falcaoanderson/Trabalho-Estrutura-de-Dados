@@ -166,6 +166,24 @@ template <typename T> struct List {
         }
     }
 
+    void popFront() {
+        Node<T>* crrNode = ptrFront;
+
+        if (crrNode!=nullptr) {
+            ptrFront = crrNode->ptrNext;
+
+            if(crrNode->ptrNext != nullptr){
+                crrNode->ptrNext->ptrPrev = nullptr;
+            } 
+            else{
+                ptrBack = nullptr;
+            }
+
+            iSize--;
+            delete crrNode;
+        }
+    }
+
     void displayList() {
         Node<T>* crrNode = ptrFront;
 
@@ -180,6 +198,10 @@ template <typename T> struct List {
 
     Node<T>* getPtrFront(){
         return ptrFront;
+    }
+
+    T getFront(){
+        return ptrFront->tVal;
     }
 
     void resetList(const std::vector<T>& v) {

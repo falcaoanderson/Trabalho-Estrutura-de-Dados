@@ -2,6 +2,7 @@
 #define BINARY_SEARCH_TREE_H
 
 #include <iostream>
+#include "Linked_list.h"
 
 using std::endl;
 using std::cout;
@@ -137,8 +138,6 @@ public:
     }
 
     Node<T>* searchNode(T value){
-        cout << "searchNode" << endl;
-
         Node<T>* u = ptrRoot;
 
         while(u!=nullptr){
@@ -207,6 +206,34 @@ public:
         cout << endl;
     }
 
+    void bfsTraversal2(){
+        cout << "BFSOrder2: "; 
+
+        if (ptrRoot == nullptr) return;
+        
+        // Parte 1 do Trabalho: Alterar para Lista Encadeada
+        List< Node<T>* > nodeQueue;
+        
+        nodeQueue.insertBack(ptrRoot);
+        
+        while (!nodeQueue.empty()){
+            Node<T>* currentNode = nodeQueue.getFront();
+            nodeQueue.popFront();
+            
+            cout << currentNode->payload << " ";
+            
+            if (currentNode->ptrLeft != nullptr){
+                nodeQueue.insertBack(currentNode->ptrLeft);
+            }
+            
+            if (currentNode->ptrRight != nullptr){
+                nodeQueue.insertBack(currentNode->ptrRight);
+            }
+        }
+        
+        cout << endl;
+    }
+
     void transplant(Node<T>* u, Node<T>* v){ // leva v para u
         if(u->ptrParent == nullptr){
             ptrRoot = v;
@@ -234,13 +261,9 @@ public:
     }
 
     void deleteNode(T val){
-        cout << "deleteNode" << endl;
-
         Node<T>* u = searchNode(val);
 
         if(u == nullptr) return;
-
-        cout << u->payload << endl;
 
         if(u->ptrLeft == nullptr){
             transplant(u, u->ptrRight);
@@ -268,6 +291,6 @@ public:
 
 };
 
-}
+} // final tree namespace
 
-#endif
+#endif // BINARY_SEARCH_TREE_H

@@ -12,12 +12,13 @@
 #include "Measure.h"
 #include "GenerateExample.h"
 
+#include "BinarySearchTree.h"
+
 using std::cout;
 using std::cin;
 using std::endl;
 
-int main(){
-    int numTests = 10, n = 1e4;
+void sortAlgorithmsTest(int numTests=10, int n=1e4){
     List<int> list;
 
     std::vector<int> deltaTime(8);
@@ -56,7 +57,44 @@ int main(){
         cout << label[i] << ": " << deltaTime[i] << " ms." << endl;
     }
 
-    cout << "OK" << endl;
+    cout << "sortAlgorithmsTest OK" << endl;
+}
+
+void BstTest(){
+    tree::BinarySearchTree<int> mytree;
+
+    mytree.insert(10);
+    mytree.insert(5);
+    mytree.insert(15);
+    mytree.insert(4);
+    mytree.insert(7);
+    mytree.insert(6);
+    mytree.insert(9);
+
+    cout << "Tree Height: " << mytree.height() << endl;
+
+    mytree.traversePreOrder();
+    mytree.traverseInOrder();
+    mytree.traversePostOrder();
+    mytree.bfsTraversal();
+    mytree.bfsTraversal2();
+
+    mytree.deleteNode(5); cout << "deleteNode" << endl;
+    
+    mytree.traversePreOrder();
+    mytree.traverseInOrder();
+    mytree.traversePostOrder();
+    mytree.bfsTraversal();
+    mytree.bfsTraversal2();
+
+    cout << "BstTest OK" << endl;
+}
+
+int main(){
+
+    // sortAlgorithmsTest();
+
+    BstTest();
 
     return 0;
 }
