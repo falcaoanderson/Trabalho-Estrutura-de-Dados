@@ -3,6 +3,6 @@
 
 #include <vector>
 
-std::vector<int> GenerateList(int n);
+std::vector<int> GenerateList(int n, int high);
 
 #endif // GENERATE_EXAMPLE_H

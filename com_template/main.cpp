@@ -11,6 +11,7 @@
 
 #include "Measure.h"
 #include "GenerateExample.h"
+#include "RandomGenerator.h"
 
 #include "BinarySearchTree.h"
 
@@ -18,15 +19,16 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-void sortAlgorithmsTest(int numTests=10, int n=1e4){
+void sortAlgorithmsTest(int numTests, int sizeList){
     List<int> list;
+    RandomGenerator myrng(13, 1, 100);
 
     std::vector<int> deltaTime(8);
     std::vector<std::string> label = {"SelectionSort", "OptimizedSelectionSort", 
     "BubbleSort", "OptimizedBubbleSort", "InsertionSort", "OptimizedInsertionSort", "ShellSort", "OptimizedShellSort"};
 
     for(int i=1; i<=numTests; i++){
-        std::vector<int> v = GenerateList(n);
+        std::vector<int> v = myrng.GenerateList(sizeList);
 
         list.resetList(v);
         deltaTime[0] += measureAndSort(SelectionSort, list);
@@ -60,43 +62,42 @@ void sortAlgorithmsTest(int numTests=10, int n=1e4){
     cout << "sortAlgorithmsTest OK" << endl;
 }
 
-void BstTest(){
+void BstTest(int n){
     bst::BinarySearchTree<int> mytree;
 
-    mytree.insert(10);
-    mytree.insert(5);
-    mytree.insert(15);
-    mytree.insert(4);
-    mytree.insert(7);
-    mytree.insert(6);
-    mytree.insert(9);
+    std::vector<int> v = GenerateList(1e4, 1e9);
+
+    for(int x: v){
+        // cout << x << " ";
+        mytree.insert(x);
+    }
+    // cout << endl;
 
     cout << "Tree Height: " << mytree.height() << endl;
+    // mytree.traversePreOrder();
+    // mytree.traverseInOrder();
+    // mytree.traversePostOrder();
+    // mytree.bfsTraversal();
 
-    mytree.traversePreOrder();
-    mytree.traverseInOrder();
-    mytree.traversePostOrder();
-    mytree.bfsTraversal();
+    // cout << (mytree.searchNodeBFS(86)!=nullptr) << endl;
+    // mytree.deleteNode(86); cout << "deleteNode" << endl;
+    // cout << (mytree.searchNodeBFS(86)!=nullptr) << endl;
 
-    cout << (mytree.searchNodeBFS(5)!=nullptr) << endl;
-
-    mytree.deleteNode(5); cout << "deleteNode" << endl;
-    
-    cout << (mytree.searchNodeBFS(5)!=nullptr) << endl;
-
-    mytree.traversePreOrder();
-    mytree.traverseInOrder();
-    mytree.traversePostOrder();
-    mytree.bfsTraversal();
+    cout << "Tree Height: " << mytree.height() << endl;
+    // mytree.traversePreOrder();
+    // mytree.traverseInOrder();
+    // mytree.traversePostOrder();
+    // mytree.bfsTraversal();
 
     cout << "BstTest OK" << endl;
 }
 
 int main(){
 
-    // sortAlgorithmsTest();
+    sortAlgorithmsTest(10, 1e4);
 
-    BstTest();
+    // BstTest(1e1);
+    // std::vector<int> v;
 
     return 0;
 }

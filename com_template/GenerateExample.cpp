@@ -2,10 +2,10 @@
 #include <vector>
 #include <random>
 
-std::vector<int> GenerateList(int n) {
+std::vector<int> GenerateList(int n, int high) {
     // std::random_device rd;  
     std::mt19937 gen(13); 
-    std::uniform_int_distribution<> unifDis(1, 100); 
+    std::uniform_int_distribution<> unifDis(1, high); 
 
     std::vector<int> temp;
     

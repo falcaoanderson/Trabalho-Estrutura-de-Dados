@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "Linked_list.h"
+#include "utils.h"
 
 using std::endl;
 using std::cout;
@@ -19,14 +20,6 @@ template<typename T> struct Node{
     Node(T payload, Node<T>* ptrParent) : payload(payload), ptrLeft(nullptr), ptrRight(nullptr), ptrParent(ptrParent) {}
 };
 
-template<typename T> T max(T a, T b){
-    return a<b?b:a;
-}
-
-template<typename T> T min(T a, T b){
-    return a<b?a:b;
-}
-
 template<typename T> 
 class BinarySearchTree{
 
@@ -34,7 +27,7 @@ private:
     Node<T>* ptrRoot;
     int size;
 
-    Node<T>* searchParent(Node<T>* u, T value){ // retorna o "parente" de value
+    Node<T>* searchParent(Node<T>* u, T value) const{ // retorna o "parente" de value
         if(u==nullptr){
             return nullptr;
         }
@@ -68,7 +61,7 @@ private:
         delete u;
     }
 
-    void traversePreOrder(Node<T>* u){
+    void traversePreOrder(Node<T>* u) const{
         if(u==nullptr){
             return;
         }
@@ -78,7 +71,7 @@ private:
         traversePreOrder(u->ptrRight);
     }
 
-    void traverseInOrder(Node<T>* u){
+    void traverseInOrder(Node<T>* u) const{
         if(u==nullptr){
             return;
         }
@@ -88,7 +81,7 @@ private:
         traverseInOrder(u->ptrRight);
     }
 
-    void traversePostOrder(Node<T>* u){
+    void traversePostOrder(Node<T>* u) const{
         if(u==nullptr){
             return;
         }
@@ -98,7 +91,7 @@ private:
         cout << u->payload << " ";
     }
     
-    int height(Node<T>* u){
+    int height(Node<T>* u) const{
         if(u==nullptr) return 0;
 
         return 1 + max(height(u->ptrLeft), height(u->ptrRight));
@@ -120,7 +113,7 @@ private:
         }
     }
     
-    Node<T>* searchMinimum(Node<T>* u){
+    Node<T>* searchMinimum(Node<T>* u) const{
         if(u==nullptr) return nullptr;
 
         while(u->ptrLeft != nullptr){
@@ -163,7 +156,7 @@ public:
         size++;
     }
 
-    Node<T>* searchNode(T value){ // Complexity: O(H)
+    Node<T>* searchNode(T value) const{ // Complexity: O(H)
         Node<T>* u = ptrRoot;
 
         while(u!=nullptr){
@@ -209,7 +202,7 @@ public:
         delete u;
     }
 
-    Node<T>* searchNodeBFS(T value){ // Complexity: O(N);
+    Node<T>* searchNodeBFS(T value) const{ // Complexity: O(N);
         if (ptrRoot == nullptr) return nullptr;
         
         List< Node<T>* > nodeQueue;
@@ -235,27 +228,27 @@ public:
         return nullptr;
     }
 
-    int height(){ // Complexity: O(H)
+    int height() const{ // Complexity: O(H)
         return height(ptrRoot);
     }
 
-    void traversePreOrder(){
+    void traversePreOrder() const{
         cout << "PreOrder: ";
         traversePreOrder(ptrRoot);
         cout << endl;
     }
-    void traverseInOrder(){
+    void traverseInOrder() const{
         cout << "InOrder: ";
         traverseInOrder(ptrRoot);
         cout << endl;
     }
-    void traversePostOrder(){
+    void traversePostOrder() const{
         cout << "PostOrder: ";
         traversePostOrder(ptrRoot);
         cout << endl;
     }
 
-    void bfsTraversal(){
+    void bfsTraversal() const{
         cout << "BFSOrder: "; 
 
         if (ptrRoot == nullptr) return;
