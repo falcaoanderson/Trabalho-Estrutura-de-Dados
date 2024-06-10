@@ -37,6 +37,7 @@ private:
         if(u==nullptr){
             return nullptr;
         }
+
         if( value < (u->payload) ){
             if( (u->ptrLeft) != nullptr){
                 return searchParent(u->ptrLeft, value);
@@ -136,22 +137,22 @@ public:
     }
 
     Node<T>* searchNode(T value){
-        if(ptrRoot==nullptr){
-            return nullptr;
-        }
+        cout << "searchNode" << endl;
 
-        if(ptrRoot->payload == value){
-            return ptrRoot;
-        }
+        Node<T>* u = ptrRoot;
 
-        Node<T>* parent = searchParent(ptrRoot, value);
+        while(u!=nullptr){
+            if(u->payload == value) break;
             
-        if( (parent->ptrLeft->payload) == value ){
-            return parent->ptrLeft;
+            if(value < (u->payload)){
+                u = u->ptrLeft;
+            }
+            else{
+                u = u->ptrRight;
+            }
         }
-        else{
-            return parent->ptrRight;
-        }
+
+        return u;
     }
 
     int height(){
@@ -233,11 +234,13 @@ public:
     }
 
     void deleteNode(T val){
+        cout << "deleteNode" << endl;
+
         Node<T>* u = searchNode(val);
 
-        cout << u->payload << endl;
-
         if(u == nullptr) return;
+
+        cout << u->payload << endl;
 
         if(u->ptrLeft == nullptr){
             transplant(u, u->ptrRight);

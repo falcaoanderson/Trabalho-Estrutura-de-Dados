@@ -14,6 +14,8 @@ int main(){
     mytree.insert(15);
     mytree.insert(4);
     mytree.insert(7);
+    mytree.insert(6);
+    mytree.insert(9);
 
     cout << "Tree Height: " << mytree.height() << endl;
 
