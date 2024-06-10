@@ -7,6 +7,8 @@ using std::endl;
 using std::cout;
 using std::cin;
 
+namespace tree{
+
 template<typename T> struct Node{
     T payload;
     Node<T> *ptrLeft, *ptrRight, *ptrParent;
@@ -203,16 +205,34 @@ public:
         cout << endl;
     }
 
+    // void transplant(Node<T> u, Node<t> v){
+    //     if(u->ptrParent == nullptr){
+    //         ptrRoot = v;
+    //     }
+    // }
+
     // void deleteNode(T val){
     //     Node<T>* u = searchNode(val);
 
     //     if(u == nullptr) return;
 
+    //     if(u->ptrParent != nullptr){
+    //         if(u->ptrParent->ptrLeft == u){
+    //             u->ptrParent->ptrLeft = nullptr;
+    //         }
+    //         else{
+    //             u->ptrParent->ptrRight = nullptr;
+    //         }
+    //     }
+
     //     if(u->ptrLeft == nullptr && u->ptrRight == nullptr){
             
     //     }
+
     // }
 
 };
+
+}
 
 #endif

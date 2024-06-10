@@ -7,7 +7,7 @@ using std::cin;
 
 int main(){
 
-    BinarySearchTree<int> mytree;
+    tree::BinarySearchTree<int> mytree;
 
     mytree.insert(10);
     mytree.insert(5);
@@ -21,6 +21,6 @@ int main(){
     mytree.traverseInOrder();
     mytree.traversePostOrder();
     mytree.bfsTraversal();
-    
+
     return 0;
 }
