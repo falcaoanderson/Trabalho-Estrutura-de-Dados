@@ -61,7 +61,7 @@ void sortAlgorithmsTest(int numTests=10, int n=1e4){
 }
 
 void BstTest(){
-    tree::BinarySearchTree<int> mytree;
+    bst::BinarySearchTree<int> mytree;
 
     mytree.insert(10);
     mytree.insert(5);
@@ -78,8 +78,12 @@ void BstTest(){
     mytree.traversePostOrder();
     mytree.bfsTraversal();
 
+    cout << (mytree.searchNodeBFS(5)!=nullptr) << endl;
+
     mytree.deleteNode(5); cout << "deleteNode" << endl;
     
+    cout << (mytree.searchNodeBFS(5)!=nullptr) << endl;
+
     mytree.traversePreOrder();
     mytree.traverseInOrder();
     mytree.traversePostOrder();

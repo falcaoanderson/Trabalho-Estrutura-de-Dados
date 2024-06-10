@@ -8,7 +8,7 @@ using std::endl;
 using std::cout;
 using std::cin;
 
-namespace tree{
+namespace bst{
 
 template<typename T> struct Node{
     T payload;
@@ -104,6 +104,32 @@ private:
         return 1 + max(height(u->ptrLeft), height(u->ptrRight));
     }
 
+    void transplant(Node<T>* u, Node<T>* v){ // leva v para u
+        if(u->ptrParent == nullptr){
+            ptrRoot = v;
+        }
+        else if(u->ptrParent->ptrLeft == u){
+            u->ptrParent->ptrLeft = v;
+        }   
+        else if(u->ptrParent->ptrRight == u){
+            u->ptrParent->ptrRight = v;
+        }
+
+        if(v != nullptr){
+            v->ptrParent = u->ptrParent;
+        }
+    }
+    
+    Node<T>* searchMinimum(Node<T>* u){
+        if(u==nullptr) return nullptr;
+
+        while(u->ptrLeft != nullptr){
+            u = u->ptrLeft;
+        }
+
+        return u;
+    }
+
 
 public:
     BinarySearchTree() : ptrRoot(nullptr), size(0) {}
@@ -112,14 +138,14 @@ public:
         clear();
     }
 
-    void clear(){
+    void clear(){ // Complexity: O(N)
         clear(ptrRoot);
 
         size = 0;
         ptrRoot = nullptr;
     }
 
-    void insert(T value){
+    void insert(T value){ // Complexity: O(H)
         if(ptrRoot==nullptr){
             ptrRoot = new Node<T>(value);
         }
@@ -137,7 +163,7 @@ public:
         size++;
     }
 
-    Node<T>* searchNode(T value){
+    Node<T>* searchNode(T value){ // Complexity: O(H)
         Node<T>* u = ptrRoot;
 
         while(u!=nullptr){
@@ -154,7 +180,62 @@ public:
         return u;
     }
 
-    int height(){
+    void deleteNode(T val){ // Complexity: O(H)
+        Node<T>* u = searchNode(val);
+
+        if(u == nullptr) return;
+
+        if(u->ptrLeft == nullptr){
+            transplant(u, u->ptrRight);
+        }
+        else if(u->ptrRight == nullptr){
+            transplant(u, u->ptrLeft);
+        }
+        else{
+            Node<T>* successor = searchMinimum(u->ptrRight);
+
+            if(successor != u->ptrRight){
+                transplant(successor, successor->ptrRight);
+
+                successor->ptrRight = u->ptrRight;
+                u->ptrRight->ptrParent = successor;
+            }
+
+            transplant(u, successor);
+            successor->ptrLeft = u->ptrLeft;
+            u->ptrLeft->ptrParent = successor;
+        }
+
+        delete u;
+    }
+
+    Node<T>* searchNodeBFS(T value){ // Complexity: O(N);
+        if (ptrRoot == nullptr) return nullptr;
+        
+        List< Node<T>* > nodeQueue;
+        nodeQueue.insertBack(ptrRoot);
+        
+        while (!nodeQueue.empty()){
+            Node<T>* currentNode = nodeQueue.getFront();
+            nodeQueue.popFront();
+            
+            if(currentNode->payload == value){
+                return currentNode;
+            }
+            
+            if(currentNode->ptrLeft != nullptr){
+                nodeQueue.insertBack(currentNode->ptrLeft);
+            }
+            
+            if(currentNode->ptrRight != nullptr){
+                nodeQueue.insertBack(currentNode->ptrRight);
+            }
+        }
+
+        return nullptr;
+    }
+
+    int height(){ // Complexity: O(H)
         return height(ptrRoot);
     }
 
@@ -199,61 +280,6 @@ public:
         }
         
         cout << endl;
-    }
-
-    void transplant(Node<T>* u, Node<T>* v){ // leva v para u
-        if(u->ptrParent == nullptr){
-            ptrRoot = v;
-        }
-        else if(u->ptrParent->ptrLeft == u){
-            u->ptrParent->ptrLeft = v;
-        }   
-        else if(u->ptrParent->ptrRight == u){
-            u->ptrParent->ptrRight = v;
-        }
-
-        if(v != nullptr){
-            v->ptrParent = u->ptrParent;
-        }
-    }
-    
-    Node<T>* searchMinimum(Node<T>* u){
-        if(u==nullptr) return nullptr;
-
-        while(u->ptrLeft != nullptr){
-            u = u->ptrLeft;
-        }
-
-        return u;
-    }
-
-    void deleteNode(T val){
-        Node<T>* u = searchNode(val);
-
-        if(u == nullptr) return;
-
-        if(u->ptrLeft == nullptr){
-            transplant(u, u->ptrRight);
-        }
-        else if(u->ptrRight == nullptr){
-            transplant(u, u->ptrLeft);
-        }
-        else{
-            Node<T>* successor = searchMinimum(u->ptrRight);
-
-            if(successor != u->ptrRight){
-                transplant(successor, successor->ptrRight);
-
-                successor->ptrRight = u->ptrRight;
-                u->ptrRight->ptrParent = successor;
-            }
-
-            transplant(u, successor);
-            successor->ptrLeft = u->ptrLeft;
-            u->ptrLeft->ptrParent = successor;
-        }
-
-        delete u;
     }
 
 };
