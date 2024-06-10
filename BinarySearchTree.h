@@ -102,6 +102,7 @@ private:
         return 1 + max(height(u->ptrLeft), height(u->ptrRight));
     }
 
+
 public:
     BinarySearchTree() : ptrRoot(nullptr), size(0) {}
 
@@ -205,31 +206,62 @@ public:
         cout << endl;
     }
 
-    // void transplant(Node<T> u, Node<t> v){
-    //     if(u->ptrParent == nullptr){
-    //         ptrRoot = v;
-    //     }
-    // }
+    void transplant(Node<T>* u, Node<T>* v){ // leva v para u
+        if(u->ptrParent == nullptr){
+            ptrRoot = v;
+        }
+        else if(u->ptrParent->ptrLeft == u){
+            u->ptrParent->ptrLeft = v;
+        }   
+        else if(u->ptrParent->ptrRight == u){
+            u->ptrParent->ptrRight = v;
+        }
 
-    // void deleteNode(T val){
-    //     Node<T>* u = searchNode(val);
+        if(v != nullptr){
+            v->ptrParent = u->ptrParent;
+        }
+    }
+    
+    Node<T>* searchMinimum(Node<T>* u){
+        if(u==nullptr) return nullptr;
 
-    //     if(u == nullptr) return;
+        while(u->ptrLeft != nullptr){
+            u = u->ptrLeft;
+        }
 
-    //     if(u->ptrParent != nullptr){
-    //         if(u->ptrParent->ptrLeft == u){
-    //             u->ptrParent->ptrLeft = nullptr;
-    //         }
-    //         else{
-    //             u->ptrParent->ptrRight = nullptr;
-    //         }
-    //     }
+        return u;
+    }
 
-    //     if(u->ptrLeft == nullptr && u->ptrRight == nullptr){
-            
-    //     }
+    void deleteNode(T val){
+        Node<T>* u = searchNode(val);
 
-    // }
+        cout << u->payload << endl;
+
+        if(u == nullptr) return;
+
+        if(u->ptrLeft == nullptr){
+            transplant(u, u->ptrRight);
+        }
+        else if(u->ptrRight == nullptr){
+            transplant(u, u->ptrLeft);
+        }
+        else{
+            Node<T>* successor = searchMinimum(u->ptrRight);
+
+            if(successor != u->ptrRight){
+                transplant(successor, successor->ptrRight);
+
+                successor->ptrRight = u->ptrRight;
+                u->ptrRight->ptrParent = successor;
+            }
+
+            transplant(u, successor);
+            successor->ptrLeft = u->ptrLeft;
+            u->ptrLeft->ptrParent = successor;
+        }
+
+        delete u;
+    }
 
 };
 

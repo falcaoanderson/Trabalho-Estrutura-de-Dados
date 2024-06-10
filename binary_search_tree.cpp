@@ -22,5 +22,12 @@ int main(){
     mytree.traversePostOrder();
     mytree.bfsTraversal();
 
+    mytree.deleteNode(5);
+
+    mytree.traversePreOrder();
+    mytree.traverseInOrder();
+    mytree.traversePostOrder();
+    mytree.bfsTraversal();
+
     return 0;
 }
