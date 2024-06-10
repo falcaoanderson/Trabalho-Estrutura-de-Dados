@@ -179,39 +179,6 @@ public:
 
         if (ptrRoot == nullptr) return;
         
-        // Parte 1 do Trabalho: Alterar para Lista Encadeada
-        Node<T>* nodeQueue[100];
-        int idxFront = 0, idxBack = 0;
-        
-        nodeQueue[idxBack] = ptrRoot;
-        idxBack++;
-        
-        while (idxFront < idxBack){
-            Node<T>* currentNode = nodeQueue[idxFront];
-            idxFront++;
-            
-            cout << currentNode->payload << " ";
-            
-            if (currentNode->ptrLeft != nullptr){
-                nodeQueue[idxBack] = currentNode->ptrLeft;
-                idxBack++;
-            }
-            
-            if (currentNode->ptrRight != nullptr){
-                nodeQueue[idxBack] = currentNode->ptrRight;
-                idxBack++;
-            }
-        }
-
-        cout << endl;
-    }
-
-    void bfsTraversal2(){
-        cout << "BFSOrder2: "; 
-
-        if (ptrRoot == nullptr) return;
-        
-        // Parte 1 do Trabalho: Alterar para Lista Encadeada
         List< Node<T>* > nodeQueue;
         
         nodeQueue.insertBack(ptrRoot);

@@ -77,7 +77,6 @@ void BstTest(){
     mytree.traverseInOrder();
     mytree.traversePostOrder();
     mytree.bfsTraversal();
-    mytree.bfsTraversal2();
 
     mytree.deleteNode(5); cout << "deleteNode" << endl;
     
@@ -85,7 +84,6 @@ void BstTest(){
     mytree.traverseInOrder();
     mytree.traversePostOrder();
     mytree.bfsTraversal();
-    mytree.bfsTraversal2();
 
     cout << "BstTest OK" << endl;
 }
