@@ -15,11 +15,12 @@ int main(){
     mytree.insert(4);
     mytree.insert(7);
 
-    cout << mytree.height() << endl;
+    cout << "Tree Height: " << mytree.height() << endl;
 
     mytree.traversePreOrder();
     mytree.traverseInOrder();
     mytree.traversePostOrder();
-
+    mytree.bfsTraversal();
+    
     return 0;
 }

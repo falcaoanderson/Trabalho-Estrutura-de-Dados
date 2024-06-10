@@ -1,5 +1,5 @@
-#ifndef BINARY_SEARCH_TREE
-#define BINARY_SEARCH_TREE
+#ifndef BINARY_SEARCH_TREE_H
+#define BINARY_SEARCH_TREE_H
 
 #include <iostream>
 
@@ -8,12 +8,12 @@ using std::cout;
 using std::cin;
 
 template<typename T> struct Node{
-    T iPayload;
+    T payload;
     Node<T> *ptrLeft, *ptrRight, *ptrParent;
 
     Node(){}
-    Node(T iPayload) : iPayload(iPayload), ptrLeft(nullptr), ptrRight(nullptr), ptrParent(nullptr) {}
-    Node(T iPayload, Node<T>* ptrParent) : iPayload(iPayload), ptrLeft(nullptr), ptrRight(nullptr), ptrParent(ptrParent) {}
+    Node(T payload) : payload(payload), ptrLeft(nullptr), ptrRight(nullptr), ptrParent(nullptr) {}
+    Node(T payload, Node<T>* ptrParent) : payload(payload), ptrLeft(nullptr), ptrRight(nullptr), ptrParent(ptrParent) {}
 };
 
 template<typename T> T max(T a, T b){
@@ -31,13 +31,13 @@ private:
     Node<T>* ptrRoot;
     int size;
 
-    Node<T>* searchParent(Node<T>* u, T iValue){ // retorna o "parente" de iValue
+    Node<T>* searchParent(Node<T>* u, T value){ // retorna o "parente" de value
         if(u==nullptr){
             return nullptr;
         }
-        if( iValue < (u->iPayload) ){
+        if( value < (u->payload) ){
             if( (u->ptrLeft) != nullptr){
-                return searchParent(u->ptrLeft, iValue);
+                return searchParent(u->ptrLeft, value);
             }
             else{
                 return u;
@@ -45,7 +45,7 @@ private:
         }
         else{
             if( (u->ptrRight) != nullptr){
-                return searchParent(u->ptrRight, iValue);
+                return searchParent(u->ptrRight, value);
             }
             else{
                 return u;
@@ -69,7 +69,7 @@ private:
             return;
         }
 
-        cout << u->iPayload << " ";
+        cout << u->payload << " ";
         traversePreOrder(u->ptrLeft);
         traversePreOrder(u->ptrRight);
     }
@@ -80,7 +80,7 @@ private:
         }
 
         traverseInOrder(u->ptrLeft);
-        cout << u->iPayload << " ";
+        cout << u->payload << " ";
         traverseInOrder(u->ptrRight);
     }
 
@@ -91,7 +91,7 @@ private:
 
         traversePostOrder(u->ptrLeft);
         traversePostOrder(u->ptrRight);
-        cout << u->iPayload << " ";
+        cout << u->payload << " ";
     }
     
     int height(Node<T>* u){
@@ -114,36 +114,36 @@ public:
         ptrRoot = nullptr;
     }
 
-    void insert(T iValue){
+    void insert(T value){
         if(ptrRoot==nullptr){
-            ptrRoot = new Node<T>(iValue);
+            ptrRoot = new Node<T>(value);
         }
         else{
-            Node<T>* parent = searchParent(ptrRoot, iValue);
+            Node<T>* parent = searchParent(ptrRoot, value);
             
-            if( iValue < (parent->iPayload) ){
-                parent->ptrLeft = new Node<T>(iValue, parent);
+            if( value < (parent->payload) ){
+                parent->ptrLeft = new Node<T>(value, parent);
             }
             else{
-                parent->ptrRight = new Node<T>(iValue, parent);
+                parent->ptrRight = new Node<T>(value, parent);
             }
         }
 
         size++;
     }
 
-    Node<T>* searchNode(T iValue){
+    Node<T>* searchNode(T value){
         if(ptrRoot==nullptr){
             return nullptr;
         }
 
-        if(ptrRoot->iPayload == iValue){
+        if(ptrRoot->payload == value){
             return ptrRoot;
         }
 
-        Node<T>* parent = searchParent(ptrRoot, iValue);
+        Node<T>* parent = searchParent(ptrRoot, value);
             
-        if( (parent->ptrLeft->iPayload) == iValue ){
+        if( (parent->ptrLeft->payload) == value ){
             return parent->ptrLeft;
         }
         else{
@@ -151,22 +151,68 @@ public:
         }
     }
 
+    int height(){
+        return height(ptrRoot);
+    }
+
     void traversePreOrder(){
+        cout << "PreOrder: ";
         traversePreOrder(ptrRoot);
         cout << endl;
     }
     void traverseInOrder(){
+        cout << "InOrder: ";
         traverseInOrder(ptrRoot);
         cout << endl;
     }
     void traversePostOrder(){
+        cout << "PostOrder: ";
         traversePostOrder(ptrRoot);
         cout << endl;
     }
 
-    int height(){
-        return height(ptrRoot);
+    void bfsTraversal(){
+        cout << "BFSOrder: "; 
+
+        if (ptrRoot == nullptr) return;
+        
+        // Parte 1 do Trabalho: Alterar para Lista Encadeada
+        Node<T>* nodeQueue[100];
+        int idxFront = 0, idxBack = 0;
+        
+        nodeQueue[idxBack] = ptrRoot;
+        idxBack++;
+        
+        while (idxFront < idxBack){
+            Node<T>* currentNode = nodeQueue[idxFront];
+            idxFront++;
+            
+            cout << currentNode->payload << " ";
+            
+            if (currentNode->ptrLeft != nullptr){
+                nodeQueue[idxBack] = currentNode->ptrLeft;
+                idxBack++;
+            }
+            
+            if (currentNode->ptrRight != nullptr){
+                nodeQueue[idxBack] = currentNode->ptrRight;
+                idxBack++;
+            }
+        }
+
+        cout << endl;
     }
+
+    // void deleteNode(T val){
+    //     Node<T>* u = searchNode(val);
+
+    //     if(u == nullptr) return;
+
+    //     if(u->ptrLeft == nullptr && u->ptrRight == nullptr){
+            
+    //     }
+    // }
+
 };
 
 #endif
