@@ -10,7 +10,7 @@
 #include "SortShell.h"
 
 #include "Measure.h"
-#include "GenerateExample.h"
+// #include "GenerateExample.h"
 #include "RandomGenerator.h"
 
 #include "BinarySearchTree.h"
@@ -62,42 +62,37 @@ void sortAlgorithmsTest(int numTests, int sizeList){
     cout << "sortAlgorithmsTest OK" << endl;
 }
 
-void BstTest(int n){
+void BstTest(int sizeTree){
     bst::BinarySearchTree<int> mytree;
+    RandomGenerator myrng(13, 1, 1e9);
+    std::chrono::high_resolution_clock::time_point start, stop; int duration;
 
-    std::vector<int> v = GenerateList(1e4, 1e9);
+    std::vector<int> v = myrng.GenerateList(sizeTree);
 
-    for(int x: v){
-        // cout << x << " ";
-        mytree.insert(x);
-    }
-    // cout << endl;
-
+    start = std::chrono::high_resolution_clock::now();
+    for(int x: v) mytree.insert(x);
+    stop = std::chrono::high_resolution_clock::now();
+    
+    duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
+    cout << "Build Tree Time: " << duration << "ms." << endl;
+    
     cout << "Tree Height: " << mytree.height() << endl;
-    // mytree.traversePreOrder();
-    // mytree.traverseInOrder();
-    // mytree.traversePostOrder();
-    // mytree.bfsTraversal();
 
-    // cout << (mytree.searchNodeBFS(86)!=nullptr) << endl;
-    // mytree.deleteNode(86); cout << "deleteNode" << endl;
-    // cout << (mytree.searchNodeBFS(86)!=nullptr) << endl;
-
-    cout << "Tree Height: " << mytree.height() << endl;
-    // mytree.traversePreOrder();
-    // mytree.traverseInOrder();
-    // mytree.traversePostOrder();
-    // mytree.bfsTraversal();
+    start = std::chrono::high_resolution_clock::now();
+    cout << (mytree.searchNode(213123) == nullptr) << endl;
+    stop = std::chrono::high_resolution_clock::now();
+    
+    duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
+    cout << "Build Tree Time: " << duration << "ms." << endl;
 
     cout << "BstTest OK" << endl;
 }
 
 int main(){
 
-    sortAlgorithmsTest(10, 1e4);
+    // sortAlgorithmsTest(1, 1e4);
 
-    // BstTest(1e1);
-    // std::vector<int> v;
+    BstTest(1e4);
 
     return 0;
 }
