@@ -1,5 +1,5 @@
-# atividade-pinho2
+# Trabalho-Estrutura-de-Dados
 
-atividade de estrutura de dados
+Trabalho de Estrutura de dados
 
 Dupla: Anderson(231708003) e Ximena (241708801)
