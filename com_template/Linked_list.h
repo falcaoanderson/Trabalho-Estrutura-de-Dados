@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <cassert>
 
 using std::endl;
 using std::cout;
@@ -13,11 +14,7 @@ template <typename T> struct Node {
     Node<T>* ptrNext;
     Node<T>* ptrPrev;
 
-    Node(T tVal){
-        this->tVal     = tVal;
-        this->ptrNext  = nullptr;
-        this->ptrPrev  = nullptr;
-    }
+    Node(T tVal) : tVal(tVal), ptrNext(nullptr), ptrPrev(nullptr) {}
 };
 
 template <typename T> struct List {
@@ -27,11 +24,8 @@ private:
     Node<T>* ptrBack;
 
 public:
-    List() {
-        this->iSize    = 0;
-        this->ptrFront = nullptr;
-        this->ptrBack  = nullptr;
-    }
+    List() : iSize(0), ptrFront(nullptr), ptrBack(nullptr) {}
+
     ~List(){
         clear();
     }
@@ -123,6 +117,8 @@ public:
                 ptrBack = newNode;
             }
             crrNode->ptrNext = newNode;
+
+            iSize++;
         }
     }
 
@@ -143,6 +139,8 @@ public:
             }
 
             crrNode->ptrPrev = newNode;
+
+            iSize++;
         }
     }
 
@@ -165,6 +163,8 @@ public:
             }
 
             delete crrNode;
+
+            iSize--;
         }
     }
 
@@ -203,6 +203,8 @@ public:
     }
 
     T getFront() const{
+        assert(ptrFront != nullptr);
+
         return ptrFront->tVal;
     }
 
