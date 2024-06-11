@@ -12,6 +12,7 @@
 #include "Measure.h"
 // #include "GenerateExample.h"
 #include "RandomGenerator.h"
+#include "Clock.h"
 
 #include "BinarySearchTree.h"
 
@@ -65,25 +66,41 @@ void sortAlgorithmsTest(int numTests, int sizeList){
 void BstTest(int sizeTree){
     bst::BinarySearchTree<int> mytree;
     RandomGenerator myrng(13, 1, 1e9);
-    std::chrono::high_resolution_clock::time_point start, stop; int duration;
+    Clock clock;
+    std::vector<int> v = myrng.GenerateList(sizeTree); 
+    int deltaT;
 
-    std::vector<int> v = myrng.GenerateList(sizeTree);
-
-    start = std::chrono::high_resolution_clock::now();
+    clock.tic();
     for(int x: v) mytree.insert(x);
-    stop = std::chrono::high_resolution_clock::now();
+    deltaT = clock.toc();
+    cout << "Build Tree Time: " << deltaT << "ms." << endl;
     
-    duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
-    cout << "Build Tree Time: " << duration << "ms." << endl;
-    
-    cout << "Tree Height: " << mytree.height() << endl;
 
-    start = std::chrono::high_resolution_clock::now();
-    cout << (mytree.searchNode(213123) == nullptr) << endl;
-    stop = std::chrono::high_resolution_clock::now();
-    
-    duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
-    cout << "Build Tree Time: " << duration << "ms." << endl;
+    cout << "Tree Height: " << mytree.height() << endl;
+    cout << "Tree Size: " << mytree.size() << endl;
+
+
+    clock.tic();
+    for(int i=0; i<sizeTree; i+= min(1, sizeTree/1000)){
+        cout << (mytree.searchNode(v[i]) != nullptr) << endl;
+    }
+    deltaT = clock.toc();
+    cout << "Search Tree Time [DFS]: " << deltaT << "ms." << endl;
+
+
+    clock.tic();
+    for(int i=0; i<sizeTree; i+= min(1, sizeTree/100)){
+        cout << (mytree.searchNodeBFS(v[i]) != nullptr) << endl;
+    }
+    deltaT = clock.toc();
+    cout << "Search Tree Time [BFS]: " << deltaT << "ms." << endl;
+
+    List<int> mylist;
+
+    clock.tic();
+    for(int x: v) mylist.insertBack(x);
+    deltaT = clock.toc();
+    cout << "Build List Time: " << deltaT << "ms." << endl;
 
     cout << "BstTest OK" << endl;
 }

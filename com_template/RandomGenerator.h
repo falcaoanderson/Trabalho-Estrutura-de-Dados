@@ -1,4 +1,6 @@
-#include "GenerateExample.h"
+#ifndef RANDOM_GENERATOR_H
+#define RANDOM_GENERATOR_H
+
 #include <vector>
 #include <random>
 
@@ -22,3 +24,5 @@ public:
         return temp;
     }
 };
+
+#endif

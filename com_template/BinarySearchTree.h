@@ -25,7 +25,7 @@ class BinarySearchTree{
 
 private:
     Node<T>* ptrRoot;
-    int size;
+    int iSize;
 
     Node<T>* searchParent(Node<T>* u, T value) const{ // retorna o "parente" de value
         if(u==nullptr){
@@ -125,7 +125,7 @@ private:
 
 
 public:
-    BinarySearchTree() : ptrRoot(nullptr), size(0) {}
+    BinarySearchTree() : ptrRoot(nullptr), iSize(0) {}
 
     ~BinarySearchTree(){
         clear();
@@ -134,7 +134,7 @@ public:
     void clear(){ // Complexity: O(N)
         clear(ptrRoot);
 
-        size = 0;
+        iSize = 0;
         ptrRoot = nullptr;
     }
 
@@ -153,7 +153,7 @@ public:
             }
         }
 
-        size++;
+        iSize++;
     }
 
     Node<T>* searchNode(T value) const{ // Complexity: O(H)
@@ -199,6 +199,7 @@ public:
             u->ptrLeft->ptrParent = successor;
         }
 
+        iSize--;
         delete u;
     }
 
@@ -273,6 +274,10 @@ public:
         }
         
         cout << endl;
+    }
+
+    int size() const{
+        return iSize;
     }
 
 };
