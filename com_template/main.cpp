@@ -81,7 +81,7 @@ void BstTest(int sizeTree){
 
 
     clock.tic();
-    for(int i=0; i<sizeTree; i+= min(1, sizeTree/1000)){
+    for(int i=0; i<sizeTree; i+= max(1, sizeTree/1000)){
         cout << (mytree.searchNode(v[i]) != nullptr) << endl;
     }
     deltaT = clock.toc();
@@ -89,7 +89,7 @@ void BstTest(int sizeTree){
 
 
     clock.tic();
-    for(int i=0; i<sizeTree; i+= min(1, sizeTree/100)){
+    for(int i=0; i<sizeTree; i+= max(1, sizeTree/1000)){
         cout << (mytree.searchNodeBFS(v[i]) != nullptr) << endl;
     }
     deltaT = clock.toc();

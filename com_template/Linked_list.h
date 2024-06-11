@@ -21,10 +21,12 @@ template <typename T> struct Node {
 };
 
 template <typename T> struct List {
+private:
     int iSize;
     Node<T>* ptrFront;
     Node<T>* ptrBack;
 
+public:
     List() {
         this->iSize    = 0;
         this->ptrFront = nullptr;
@@ -34,7 +36,7 @@ template <typename T> struct List {
         clear();
     }
 
-    void clear() {
+    void clear(){
         if(empty()) return;
 
         Node<T>* crrNode = ptrFront;
@@ -50,10 +52,10 @@ template <typename T> struct List {
         iSize = 0;
     }
 
-    int size(){
+    int size() const{
         return iSize;
     }
-    bool empty(){
+    bool empty() const{
         return (iSize==0);
     }
 
@@ -73,7 +75,7 @@ template <typename T> struct List {
         iSize++;
     }
 
-    void insertBack(T tVal) {
+    void insertBack(T tVal){
         Node<T>* newNode = new Node<T>(tVal);
 
         if(ptrFront==nullptr){
@@ -89,10 +91,10 @@ template <typename T> struct List {
         iSize++;
     }
 
-    Node<T>* SearchNodeByValue(T tVal) {
+    Node<T>* SearchNodeByValue(T tVal) const{
         Node<T>* crrNode = ptrFront;
 
-        while (crrNode!=nullptr && crrNode->tVal != tVal) {
+        while (crrNode!=nullptr && crrNode->tVal != tVal){
             crrNode = crrNode->ptrNext;
         }
 
@@ -104,10 +106,10 @@ template <typename T> struct List {
         }
     }
 
-    void insertAfter(T tVal, T newValue) {
+    void insertAfter(T tVal, T newValue){
         Node<T>* crrNode = SearchNodeByValue(tVal);
 
-        if (crrNode!=nullptr) {
+        if (crrNode!=nullptr){
 
             Node<T>* newNode = new Node<T>(newValue);
 
@@ -124,7 +126,7 @@ template <typename T> struct List {
         }
     }
 
-    void insertBefore(T tVal, T newValue) {
+    void insertBefore(T tVal, T newValue){
         Node<T>* crrNode=SearchNodeByValue(tVal);
 
         if (crrNode!=nullptr) {
@@ -144,10 +146,10 @@ template <typename T> struct List {
         }
     }
 
-    void deleteByValue(T tVal) {
+    void deleteByValue(T tVal){
         Node<T>* crrNode = SearchNodeByValue(tVal);
 
-        if (crrNode!=nullptr) {
+        if (crrNode!=nullptr){
             if (crrNode->ptrPrev){
                 crrNode->ptrPrev->ptrNext = crrNode->ptrNext;
             } 
@@ -166,10 +168,10 @@ template <typename T> struct List {
         }
     }
 
-    void popFront() {
+    void popFront(){
         Node<T>* crrNode = ptrFront;
 
-        if (crrNode!=nullptr) {
+        if (crrNode!=nullptr){
             ptrFront = crrNode->ptrNext;
 
             if(crrNode->ptrNext != nullptr){
@@ -184,11 +186,11 @@ template <typename T> struct List {
         }
     }
 
-    void displayList() {
+    void displayList() const{
         Node<T>* crrNode = ptrFront;
 
         cout << "List: ";
-        while(crrNode!=nullptr) {
+        while(crrNode!=nullptr){
             cout << crrNode->tVal << " ";
 
             crrNode = crrNode->ptrNext;
@@ -196,15 +198,15 @@ template <typename T> struct List {
         cout << endl;
     }
 
-    Node<T>* getPtrFront(){
+    Node<T>* getPtrFront() const{
         return ptrFront;
     }
 
-    T getFront(){
+    T getFront() const{
         return ptrFront->tVal;
     }
 
-    void resetList(const std::vector<T>& v) {
+    void resetList(const std::vector<T>& v){
         clear();
 
         for(T x: v){
